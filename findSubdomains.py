@@ -12,6 +12,10 @@ def normalize_url(url):
 
     Returns:
     str: The normalized URL without query and fragment.
+
+    Example:
+    >>> normalize_url("https://example.com/path?query=1#fragment")
+    'https://example.com/path'
     """
     parsed_url = urlparse(url)
     return urlunparse(parsed_url._replace(query="", fragment=""))
@@ -27,6 +31,16 @@ def is_subpath(base_url, url):
 
     Returns:
     bool: True if the URL is a subpath of the base URL, False otherwise.
+
+    Example:
+    >>> is_subpath("https://example.com", "https://example.com/path")
+    True
+    >>> is_subpath("https://example.com", "https://example.com")
+    True
+    >>> is_subpath("https://example.com", "https://example.com/path?query=1#fragment")
+    True
+    >>> is_subpath("https://example.com", "https://example.org")
+    False
     """
     return url.startswith(base_url)
 
@@ -77,7 +91,6 @@ def get_subpaths(base_url, max_urls=30):
             print(f"Failed to access {current_url}: {e}")
         except Exception as e:
             print(f"An error occurred: {e}")
-
     return all_urls
 
 
